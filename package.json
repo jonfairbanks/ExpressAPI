@@ -1,0 +1,46 @@
+{
+  "name": "React-Skeleton-Backend",
+  "version": "1.0.0",
+  "description": "API Server with auth for React-Skelton",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Brandon Sorgdrager",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.1",
+    "bcrypt-nodejs": "^0.0.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "ddos": "^0.1.31",
+    "express": "^4.16.3",
+    "express-rate-limit": "^2.11.0",
+    "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.3.0",
+    "lusca": "^1.6.0",
+    "mongoose": "^5.3.3",
+    "mongoose-string-query": "^0.2.5",
+    "mongoose-timestamp": "^0.6.0",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
+    "passport-google-token": "^0.1.2",
+    "passport-jwt": "^4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bsord/react-skeleton-api"
+  },
+  "keywords": [
+    "http",
+    "http server",
+    "http-server",
+    "express",
+    "express server",
+    "express-server",
+    "file server",
+    "file-server"
+  ]
+}
