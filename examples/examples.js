@@ -1,6 +1,6 @@
 // THESE ARE EXAMPLES ONLY! THIS IS NOT A FUNCTIONAL FILE
 
-// Import axios for making the calll
+// Import axios for making the call
   const axios = require('axios');
 
 // Define user details used for registration
@@ -21,7 +21,8 @@
 // LOGIN to get JWT/Authorization Token
   axios.post('https://localhost:3000/login', { username, password })
     .then((result) => {
-      console.log(result.data.token);
+      token = result.data.token;
+      console.log(result.data);
     })
     .catch((error) => {
       if(error.response.status === 401) {
