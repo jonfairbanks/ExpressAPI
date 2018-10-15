@@ -1,23 +1,23 @@
 # ExpressAPI
-An Express/MongoDB based rest API with Passport token authentication.
+An Express/MongoDB based REST API with Passport token authentication.
 
 ## Prerequisites
 * MongoDB instance
 
 ## Deployment
 
-* #### Install dependencies
+* #### Install Dependencies
 `yarn install`
 
 * #### Start Server
 `MONGO_URI='mongodb://user:pass@hostname:27017/db' yarn start`
 
 * #### Validate
-Navigate to http://hostname:3000/ and confirm you receive the below resposne:
+Navigate to http://hostname:3000/ and confirm you receive the below response:
 > {"message":"Connected!"}
 
 ## Usage
-_ You must first register, then login to receive the token which you can then use for the other endpoints. You only need to call login with user/pass if already registered._
+You must first register, then login to receive the token which you can then use for the other endpoints. You only need to call login with user/pass if already registered.
 
 ### Get Authentication Token
 
