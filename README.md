@@ -1,7 +1,7 @@
 # ExpressAPI
 An Express/MongoDB based rest API with Passport token authentication.
 
-## Prerequesites
+## Prerequisites
 * MongoDB instance
 
 ## Deployment
