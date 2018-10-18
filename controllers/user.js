@@ -17,11 +17,9 @@ exports.list = (req, res) => {
 
 };
 
-// retrieve a specific user using the user id (in our case, the user from the jwt)
 exports.get = (req, res) => {
-//const data = Object.assign(req.body, { user: req.user.sub }) || {};
 
-	User.findById(data.user)
+	User.findById({ _id: req.params.userId })
 		.then(user => {
 			user.password = undefined;
 			user.recoveryCode = undefined;
@@ -35,9 +33,9 @@ exports.get = (req, res) => {
 
 // update a specific user
 exports.put = (req, res) => {
-	const data = Object.assign(req.body, { user: req.user.sub }) || {};
-
-	User.findByIdAndUpdate({ _id: data.user }, data, { new: true })
+	const data = req.body.data
+	console.log(data);
+	User.findByIdAndUpdate({ _id: data._id }, {name: data.name, username: data.username}, { new: true })
 		.then(user => {
 			if (!user) {
 				return res.sendStatus(404);
@@ -67,18 +65,13 @@ exports.post = (req, res) => {
 
 // remove a user record (in our case, set the active flag to false to preserve data)
 exports.delete = (req, res) => {
-	User.findByIdAndUpdate(
-		{ _id: req.params.user },
-		{ active: false },
-		{
-			new: true,
-		},
+	User.findByIdAndRemove(
+		{ _id: req.body._id }
 	)
 		.then(user => {
 			if (!user) {
 				return res.sendStatus(404);
 			}
-
 			res.sendStatus(204);
 		})
 		.catch(err => {

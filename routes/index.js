@@ -59,8 +59,10 @@ router.post('/login', function(req, res) {
   });
 });
 
-
 router.get('/users', passport.authenticate('jwt', { session: false}), UserCntrl.list);
 router.get('/users/:userId', passport.authenticate('jwt', { session: false}), UserCntrl.get);
+router.post('/users', passport.authenticate('jwt', { session: false}), UserCntrl.post);
+router.put('/users', passport.authenticate('jwt', { session: false}), UserCntrl.put);
+router.delete('/users', passport.authenticate('jwt', { session: false}), UserCntrl.delete);
 
 module.exports = router;
