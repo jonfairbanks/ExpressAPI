@@ -1,4 +1,3 @@
-
 // Options:
 //    - SESSION_SECRET: Either a string or array of secrets used to sign the session ID cookie (If array: first is used to sign, others are used to verify)
 //    - LOGGING: If 'true', an access.log will be created for incoming site requests using Morgan logging
@@ -24,8 +23,8 @@ const express = require('express'),
 require('dotenv').config()
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }); //use new url parser to supress warnings
-mongoose.set('useCreateIndex', true); //hide warnings about deprecation of 'ensureIndex'
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }); // Use new url parser to supress warnings
+mongoose.set('useCreateIndex', true); // Hide warnings about deprecation of 'ensureIndex'
 mongoose.Promise = global.Promise;
 
 // Initialize Express
@@ -43,7 +42,7 @@ app.use(session({
   cookie: { secure: true }
 }))
 
-// Enable cors
+// Enable CORS
 app.use(cors())
 
 // Configure Lusca
@@ -58,6 +57,7 @@ app.use(lusca({
 }))
 
 // Set additional headers and other middlewares if required
+app.disable('x-powered-by') // Disable Express' "X-Powered-By" Header
 app.use(function(req, res, next) {
   res.setHeader('X-Timestamp', Date.now()) // Tag all requests with a timestamp
   res.setHeader('X-Words-of-Wisdom', '"You come at the king, you best not miss." - Omar Little') // Yo dawg...
@@ -82,9 +82,6 @@ if(process.env.RATE_LIMIT == true) {
   app.use('/', limiter)
 }
 
-// Disable Express' "X-Powered-By" Header
-app.disable('x-powered-by')
-
 // Initialize and configure passport to use session.
 app.use(passport.initialize());
 app.use(passport.session());
@@ -94,5 +91,5 @@ require("./config/passport");
 app.use('/', routes);
 
 // Configure port and start listening
-const port = process.env.PORT ? process.env.PORT : 3000 // Default port is 3000 unless passed
+const port = process.env.PORT ? process.env.PORT : 8888 // Default port is 8888 unless passed
 app.listen(port, () => console.log('App Listening on Port ' + port))
