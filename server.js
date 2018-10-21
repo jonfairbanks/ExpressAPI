@@ -10,7 +10,8 @@
 //    - SITE_ROOT: If set to a string, that path will be used as the default site root instead of the default of 'public'
 //
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
+mongoose.set('useCreateIndex', true); //hide warnings about deprecation of 'ensureIndex'
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 mongoose.Promise = global.Promise;

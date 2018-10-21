@@ -6,14 +6,13 @@ exports.list = (req, res) => {
 	const query = req.query || {};
 	User.apiQuery(query)
 		// limit the information returned (server side) – e.g. no password
-		.select('name email username bio url twitter background')
+		.select('name email username admin')
 		.then(users => {
 			res.json(users);
 		})
 		.catch(err => {
 			res.status(422).send(err.errors);
 		});
-
 };
 
 exports.get = (req, res) => {
