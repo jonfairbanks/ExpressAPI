@@ -1,8 +1,4 @@
-//
-// Express REST API Server
-//
-// Author: Fairbanks-io (https://github.com/Fairbanks-io)
-//
+
 // Options:
 //    - SESSION_SECRET: Either a string or array of secrets used to sign the session ID cookie (If array: first is used to sign, others are used to verify)
 //    - LOGGING: If 'true', an access.log will be created for incoming site requests using Morgan logging
@@ -44,7 +40,7 @@ app.use(session({
   cookie: { secure: true }
 }))
 
-// Enable CORS
+// Enable cors
 app.use(cors())
 
 // Configure Lusca
@@ -83,12 +79,8 @@ if(process.env.RATE_LIMIT == true) {
   app.use('/', limiter)
 }
 
-app.disable('x-powered-by') // Disable Express' "X-Powered-By" Header
-
-var port = null;
-if(process.env.PORT){ port = process.env.PORT; }else{ port = 8888; } // Default port is 8888 unless passed
-
-app.disable('x-powered-by') // Disables Express' "X-Powered-By" Header
+// Disable Express' "X-Powered-By" Header
+app.disable('x-powered-by')
 
 // Initialize and configure passport to use session.
 app.use(passport.initialize());
