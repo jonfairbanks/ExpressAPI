@@ -4,7 +4,6 @@ let User = require('../models/user');
 // retrieve a list of all users
 exports.list = (req, res) => {
 	const query = req.query || {};
-
 	User.apiQuery(query)
 		// limit the information returned (server side) – e.g. no password
 		.select('name email username bio url twitter background')
@@ -18,7 +17,6 @@ exports.list = (req, res) => {
 };
 
 exports.get = (req, res) => {
-
 	User.findById({ _id: req.params.userId })
 		.then(user => {
 			user.password = undefined;
@@ -34,7 +32,6 @@ exports.get = (req, res) => {
 // update a specific user
 exports.put = (req, res) => {
 	const data = req.body.data
-	console.log(data);
 	User.findByIdAndUpdate({ _id: data._id }, {name: data.name, username: data.username}, { new: true })
 		.then(user => {
 			if (!user) {

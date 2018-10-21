@@ -87,6 +87,7 @@ if(process.env.PORT){ port = process.env.PORT; }else{ port = 3000; } // Default 
 app.disable('x-powered-by') // Disables Express' "X-Powered-By" Header
 //app.use('/', express.static(path.join(__dirname, process.env.SITE_ROOT || 'public'))) // Use the ENV defined site root or default "public"
 app.use(passport.initialize());
+app.use(passport.session());
 require("./config/passport");
 app.use('/', routes);
 
