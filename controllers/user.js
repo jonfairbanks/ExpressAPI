@@ -5,28 +5,28 @@ let User = require('../models/user');
 exports.list = (req, res) => {
 	const query = req.query || {};
 	User.apiQuery(query)
-		// limit the information returned (server side) – e.g. no password
-		.select('name email username admin')
-		.then(users => {
-			res.json(users);
-		})
-		.catch(err => {
-			res.status(422).send(err.errors);
-		});
+	// Limit the information returned (server side) – e.g. no password
+	.select('name email username admin')
+	.then(users => {
+		res.json(users);
+	})
+	.catch(err => {
+		res.status(422).send(err.errors);
+	});
 };
 
 // Get a single user by ID provided in URL param
 exports.get = (req, res) => {
 	User.findById({ _id: req.params.userId })
-		.then(user => {
-			user.password = undefined;
-			user.recoveryCode = undefined;
+	.then(user => {
+		user.password = undefined;
+		user.recoveryCode = undefined;
 
-			res.json(user);
-		})
-		.catch(err => {
-			res.status(422).send(err.errors);
-		});
+		res.json(user);
+	})
+	.catch(err => {
+		res.status(422).send(err.errors);
+	});
 };
 
 // Update a specific user
@@ -54,14 +54,13 @@ exports.put = (req, res) => {
 // Create a new user
 exports.post = (req, res) => {
 	const data = Object.assign({}, req.body, { user: req.user.sub }) || {};
-
 	User.create(data)
-		.then(user => {
-			res.json(user);
-		})
-		.catch(err => {
-			res.status(500).send(err);
-		});
+	.then(user => {
+		res.json(user);
+	})
+	.catch(err => {
+		res.status(500).send(err);
+	});
 };
 
 
