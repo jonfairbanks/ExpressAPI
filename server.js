@@ -85,9 +85,6 @@ if(process.env.RATE_LIMIT == true) {
 
 app.disable('x-powered-by') // Disable Express' "X-Powered-By" Header
 
-var port = null;
-if(process.env.PORT){ port = process.env.PORT; }else{ port = 8888; } // Default port is 8888 unless passed
-
 app.disable('x-powered-by') // Disables Express' "X-Powered-By" Header
 
 // Initialize and configure passport to use session.
@@ -99,5 +96,5 @@ require("./config/passport");
 app.use('/', routes);
 
 // Configure port and start listening
-const port = process.env.PORT ? process.env.PORT : 3000 // Default port is 3000 unless passed
+const port = process.env.PORT ? process.env.PORT : 8888 // Default port is 8888 unless passed
 app.listen(port, () => console.log('App Listening on Port ' + port))
