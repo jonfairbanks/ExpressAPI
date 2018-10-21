@@ -1,5 +1,5 @@
-if(!process.env.SESSION_SECRET){ console.warn("SESSION_SECRET not passed. Using a default value."); }
-const	secret = process.env.SESSION_SECRET || "MySessionSecret";
+if(!process.env.TOKEN_SECRET){ console.warn("TOKEN_SECRET not passed. Using a default value."); }
+const	secret = process.env.TOKEN_SECRET || "MyTokenSecret";
 
 module.exports = {
   'secret': secret
