@@ -52,7 +52,7 @@ UserSchema.methods.comparePassword = function (passw, cb) {
 };
 
 // Configure plugins
-UserSchema.plugin(timestamps); // automatically adds createdAt and updatedAt timestamps
-UserSchema.plugin(mongooseStringQuery); // enables query capabilities (e.g. ?foo=bar)
+UserSchema.plugin(timestamps); // Automatically adds createdAt and updatedAt timestamps
+UserSchema.plugin(mongooseStringQuery); // Enables query capabilities (e.g. ?foo=bar)
 
 module.exports = mongoose.model('User', UserSchema)

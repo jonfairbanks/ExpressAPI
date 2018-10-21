@@ -3,7 +3,7 @@ var JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt;
 
 var User = require('../models/user');
-var settings = require('../config/settings'); // get settings file
+var settings = require('../config/settings'); // Get settings file
 var opts = {};
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
   opts.secretOrKey = settings.secret;
