@@ -1,7 +1,7 @@
 //
-// Express HTTP File Server with Lusca and DDoS Rate Limiting
+// Express REST API Server
 //
-// Authors: Jon Fairbanks (https://github.com/jonfairbanks), Brandon Sorgdrager (https://github.com/bsord)
+// Author: Fairbanks-io (https://github.com/Fairbanks-io)
 //
 // Options:
 //    - SESSION_SECRET: Either a string or array of secrets used to sign the session ID cookie (If array: first is used to sign, others are used to verify)
@@ -44,7 +44,7 @@ app.use(session({
   cookie: { secure: true }
 }))
 
-// Enable cors
+// Enable CORS
 app.use(cors())
 
 // Configure Lusca
@@ -83,8 +83,12 @@ if(process.env.RATE_LIMIT == true) {
   app.use('/', limiter)
 }
 
-// Disable Express' "X-Powered-By" Header
-app.disable('x-powered-by')
+app.disable('x-powered-by') // Disable Express' "X-Powered-By" Header
+
+var port = null;
+if(process.env.PORT){ port = process.env.PORT; }else{ port = 8888; } // Default port is 8888 unless passed
+
+app.disable('x-powered-by') // Disables Express' "X-Powered-By" Header
 
 // Initialize and configure passport to use session.
 app.use(passport.initialize());
