@@ -20,6 +20,9 @@ const express = require('express'),
   routes = require('./routes');
   mongoose = require('mongoose');
 
+// Load environment Variables (must be specified in .env file on root)
+require('dotenv').config()
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }); //use new url parser to supress warnings
 mongoose.set('useCreateIndex', true); //hide warnings about deprecation of 'ensureIndex'
