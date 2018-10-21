@@ -20,6 +20,7 @@ var UserSchema = new mongoose.Schema({
   }
 });
 
+// Encrypt the password before storing.
 UserSchema.pre('save', function (next) {
     var user = this;
     if (this.isModified('password') || this.isNew) {
@@ -40,6 +41,7 @@ UserSchema.pre('save', function (next) {
     }
 });
 
+// Verify password by decrypting it.
 UserSchema.methods.comparePassword = function (passw, cb) {
     bcrypt.compare(passw, this.password, function (err, isMatch) {
         if (err) {
@@ -49,6 +51,7 @@ UserSchema.methods.comparePassword = function (passw, cb) {
     });
 };
 
+// Configure plugins
 UserSchema.plugin(timestamps); // automatically adds createdAt and updatedAt timestamps
 UserSchema.plugin(mongooseStringQuery); // enables query capabilities (e.g. ?foo=bar)
 

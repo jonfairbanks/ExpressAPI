@@ -1,7 +1,7 @@
-// import user model
+// Import User model
 let User = require('../models/user');
 
-// retrieve a list of all users
+// Retrieve a list of all users (optionally filter by url params)
 exports.list = (req, res) => {
 	const query = req.query || {};
 	User.apiQuery(query)
@@ -15,6 +15,7 @@ exports.list = (req, res) => {
 		});
 };
 
+// Get a single user by ID provided in URL param
 exports.get = (req, res) => {
 	User.findById({ _id: req.params.userId })
 		.then(user => {
@@ -28,7 +29,7 @@ exports.get = (req, res) => {
 		});
 };
 
-// update a specific user
+// Update a specific user
 exports.put = (req, res) => {
 	const data = req.body.data
 	User.findByIdAndUpdate({ _id: data._id }, {name: data.name, username: data.username}, { new: true })
@@ -45,7 +46,7 @@ exports.put = (req, res) => {
 		});
 };
 
-// create a user
+// Create a new user
 exports.post = (req, res) => {
 	const data = Object.assign({}, req.body, { user: req.user.sub }) || {};
 
@@ -59,7 +60,7 @@ exports.post = (req, res) => {
 };
 
 
-// remove a user record (in our case, set the active flag to false to preserve data)
+// Remove a user record TODO: set 'active' flag rather than actually delete the user object.
 exports.delete = (req, res) => {
 	User.findByIdAndRemove(
 		{ _id: req.body._id }

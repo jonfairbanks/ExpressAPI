@@ -1,7 +1,7 @@
 //
 // Express HTTP File Server with Lusca and DDoS Rate Limiting
 //
-// Author: Jon Fairbanks (https://github.com/jonfairbanks)
+// Authors: Jon Fairbanks (https://github.com/jonfairbanks), Brandon Sorgdrager (https://github.com/bsord)
 //
 // Options:
 //    - SESSION_SECRET: Either a string or array of secrets used to sign the session ID cookie (If array: first is used to sign, others are used to verify)
@@ -39,6 +39,7 @@ if(!process.env.SESSION_SECRET){ console.warn("SESSION_SECRET not passed. Using 
 app.use(session({
 	secret: process.env.SESSION_SECRET || "MySessionSecret",
 	resave: false,
+  maxAge: 3600000,
 	saveUninitialized: true,
   cookie: { secure: true }
 }))
