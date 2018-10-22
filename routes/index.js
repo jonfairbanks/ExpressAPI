@@ -11,31 +11,6 @@ router.get('/', (req, res) => {
   res.status(200).json({ message: 'Connected!' });
 });
 
-// Register a new user by username,password.
-router.post('/register', function(req, res) {
-  if (!req.body.username || !req.body.password || !req.body.name) {
-    res.json({success: false, msg: 'Please pass name, username,  and password.'});
-  } else {
-    var newUser = new User({
-      username: req.body.username,
-      password: req.body.password,
-      name: req.body.name
-    });
-    // save the user
-    newUser.save(function(err) {
-      if (err) {
-        console.log(err);
-        return res.json({success: false, msg: 'Username already exists.'});
-
-      }
-      console.log('save success');
-      res.json({success: true, msg: 'Successful created new user.'});
-
-    });
-
-  }
-});
-
 // Login via username and password to get auth token.
 router.post('/login', function(req, res) {
   User.findOne({
