@@ -61,10 +61,11 @@ router.post('/login', function(req, res) {
 });
 
 // Handle User based routes
-router.get('/users', passport.authenticate('jwt', { session: false}), UserCntrl.list);
-router.get('/users/:userId', passport.authenticate('jwt', { session: false}), UserCntrl.get);
-router.post('/users', passport.authenticate('jwt', { session: false}), UserCntrl.post);
-router.put('/users', passport.authenticate('jwt', { session: false}), UserCntrl.put);
-router.delete('/users', passport.authenticate('jwt', { session: false}), UserCntrl.delete);
+router.get('/users', passport.authenticate('jwt', { session: false}), UserCntrl.list); // List all users
+router.post('/user', UserCntrl.post); // Create a user (Register)
+router.get('/user', passport.authenticate('jwt', { session: false}), UserCntrl.get); // Get a user
+router.put('/user', passport.authenticate('jwt', { session: false}), UserCntrl.put); // Update a user
+router.delete('/user', passport.authenticate('jwt', { session: false}), UserCntrl.delete); // Delete a user
+
 
 module.exports = router;
