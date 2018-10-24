@@ -18,7 +18,7 @@ router.post('/login', function(req, res) {
   }, function(err, user) {
     if (err) throw err;
     if (!user) {
-      res.status(401).send({success: false, msg: 'Authentication failed. User not found.'});
+      res.status(401).send({success: false, msg: 'Authentication failed'}); //user not found
     } else {
       // check if password matches
       user.comparePassword(req.body.password, function (err, isMatch) {
@@ -28,7 +28,7 @@ router.post('/login', function(req, res) {
           // return the information including token as JSON
           res.json({success: true, token: 'JWT ' + token, username: user.username, name: user.name});
         } else {
-          res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'});
+          res.status(401).send({success: false, msg: 'Authentication failed.'}); //wrong password
         }
       });
     }
