@@ -17,7 +17,8 @@ exports.list = (req, res) => {
 
 // Get a single user by ID provided in URL param
 exports.get = (req, res) => {
-	User.findById({ _id: req.params.userId })
+	const userId = req.header('userId')
+	User.findById({ _id: userId })
 		.then(user => {
 			user.password = undefined;
 			user.recoveryCode = undefined;
