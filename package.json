@@ -19,7 +19,7 @@
     "express": "^4.16.3",
     "express-rate-limit": "^2.11.0",
     "express-session": "^1.15.6",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^8.5.1",
     "lusca": "^1.6.0",
     "mongoose": "^5.5.14",
     "mongoose-string-query": "^0.2.5",
