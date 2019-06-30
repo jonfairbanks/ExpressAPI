@@ -26,7 +26,7 @@
     "mongoose-timestamp": "^0.6.0",
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
-    "passport-google-oauth": "^1.0.0",
+    "passport-google-oauth": "^2.0.0",
     "passport-google-token": "^0.1.2",
     "passport-jwt": "^4.0.0"
   },
