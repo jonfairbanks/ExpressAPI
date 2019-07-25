@@ -5,81 +5,86 @@ let User = require('../models/user');
 exports.list = (req, res) => {
 	const query = req.query || {};
 	User.apiQuery(query)
-	// Limit the information returned (server side) – e.g. no password
-	.select('name email username admin')
-	.then(users => {
-		res.json(users);
-	})
-	.catch(err => {
-		res.status(422).send(err.errors);
-	});
+		// limit the information returned (server side) – e.g. no password
+		.select('name email username admin')
+		.then(users => {
+			res.json(users);
+		})
+		.catch(err => {
+			res.status(422).send(err.errors);
+		});
 };
 
 // Get a single user by ID provided in URL param
 exports.get = (req, res) => {
-	User.findById({ _id: req.params.userId })
-	.then(user => {
-		user.password = undefined;
-		user.recoveryCode = undefined;
+	const userId = req.header('userId')
+	User.findById({ _id: userId })
+		.then(user => {
+			user.password = undefined;
+			user.recoveryCode = undefined;
 
-		res.json(user);
-	})
-	.catch(err => {
-		res.status(422).send(err.errors);
-	});
+			res.json(user);
+		})
+		.catch(err => {
+			res.status(422).send(err.errors);
+		});
 };
 
 // Update a specific user
 exports.put = (req, res) => {
 	const data = req.body.data
-	console.log(req.user._id + ' trying to update user:' + data._id)
-	if ((req.user.admin === true) | ((req.user._id).toString() === data._id)){ //Admin check works, todo: check for role/memberships in the future
-		User.findByIdAndUpdate({ _id: data._id }, {name: data.name, username: data.username}, { new: true })
-			.then(user => {
-				if (!user) {
-					return res.sendStatus(404);
-				}
-				user.password = undefined;
-				user.recoveryCode = undefined;
-				res.json(user);
-			})
-			.catch(err => {
-				res.status(422).send(err.errors);
-			});
-	} else {
-		res.status(401).send({'message':'You do not have permission to complete this action'})
-	}
+	User.findByIdAndUpdate({ _id: data._id }, {name: data.name, username: data.username}, { new: true })
+		.then(user => {
+			if (!user) {
+				return res.sendStatus(404);
+			}
+			user.password = undefined;
+			user.recoveryCode = undefined;
+			res.json(user);
+		})
+		.catch(err => {
+			res.status(422).send(err.errors);
+		});
 };
 
 // Create a new user
 exports.post = (req, res) => {
-	const data = Object.assign({}, req.body, { user: req.user.sub }) || {};
-	User.create(data)
-	.then(user => {
-		res.json(user);
-	})
-	.catch(err => {
-		res.status(500).send(err);
-	});
+	if (!req.body.username || !req.body.password || !req.body.name) {
+    res.json({success: false, msg: 'Please pass name, username,  and password.'});
+  } else {
+    var newUser = new User({
+      username: req.body.username,
+      password: req.body.password,
+      name: req.body.name
+    });
+    // save the user
+    newUser.save(function(err) {
+      if (err) {
+        console.log(err);
+        return res.json({success: false, msg: 'Username already exists.'});
+
+      }
+      console.log('save success');
+      res.json({success: true, msg: 'Successful created new user.'});
+
+    });
+
+  }
 };
 
 
 // Remove a user record TODO: set 'active' flag rather than actually delete the user object.
 exports.delete = (req, res) => {
-	if ((req.user.admin === true) | ((req.user._id).toString() === data._id)){ //Admin check works, todo: check for role/memberships in the future
-		User.findByIdAndRemove(
-			{ _id: req.body._id }
-		)
-			.then(user => {
-				if (!user) {
-					return res.sendStatus(404);
-				}
-				res.sendStatus(204);
-			})
-			.catch(err => {
-				res.status(422).send(err.errors);
-			});
-	} else {
-		res.status(401).send({'message':'You do not have permission to complete this action'})
-	}
+	User.findByIdAndRemove(
+		{ _id: req.body._id }
+	)
+		.then(user => {
+			if (!user) {
+				return res.sendStatus(404);
+			}
+			res.sendStatus(204);
+		})
+		.catch(err => {
+			res.status(422).send(err.errors);
+		});
 };

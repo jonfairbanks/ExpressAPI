@@ -11,31 +11,6 @@ router.get('/', (req, res) => {
   res.status(200).json({ message: 'Connected!' });
 });
 
-// Register a new user by username,password.
-router.post('/register', function(req, res) {
-  if (!req.body.username || !req.body.password || !req.body.name) {
-    res.json({success: false, msg: 'Please pass name, username,  and password.'});
-  } else {
-    var newUser = new User({
-      username: req.body.username,
-      password: req.body.password,
-      name: req.body.name
-    });
-    // save the user
-    newUser.save(function(err) {
-      if (err) {
-        console.log(err);
-        return res.json({success: false, msg: 'Username already exists.'});
-
-      }
-      console.log('save success');
-      res.json({success: true, msg: 'Successful created new user.'});
-
-    });
-
-  }
-});
-
 // Login via username and password to get auth token.
 router.post('/login', function(req, res) {
   User.findOne({
@@ -43,7 +18,7 @@ router.post('/login', function(req, res) {
   }, function(err, user) {
     if (err) throw err;
     if (!user) {
-      res.status(401).send({success: false, msg: 'Authentication failed. User not found.'});
+      res.status(401).send({success: false, msg: 'Authentication failed'}); //user not found
     } else {
       // check if password matches
       user.comparePassword(req.body.password, function (err, isMatch) {
@@ -53,7 +28,7 @@ router.post('/login', function(req, res) {
           // return the information including token as JSON
           res.json({success: true, token: 'JWT ' + token, username: user.username, name: user.name});
         } else {
-          res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'});
+          res.status(401).send({success: false, msg: 'Authentication failed.'}); //wrong password
         }
       });
     }
@@ -61,10 +36,11 @@ router.post('/login', function(req, res) {
 });
 
 // Handle User based routes
-router.get('/users', passport.authenticate('jwt', { session: false}), UserCntrl.list);
-router.get('/users/:userId', passport.authenticate('jwt', { session: false}), UserCntrl.get);
-router.post('/users', passport.authenticate('jwt', { session: false}), UserCntrl.post);
-router.put('/users', passport.authenticate('jwt', { session: false}), UserCntrl.put);
-router.delete('/users', passport.authenticate('jwt', { session: false}), UserCntrl.delete);
+router.get('/users', passport.authenticate('jwt', { session: true}), UserCntrl.list); // List all users
+router.post('/user', UserCntrl.post); // Create a user (Register)
+router.get('/user', passport.authenticate('jwt', { session: true}), UserCntrl.get); // Get a user
+router.put('/user', passport.authenticate('jwt', { session: true}), UserCntrl.put); // Update a user
+router.delete('/user', passport.authenticate('jwt', { session: true}), UserCntrl.delete); // Delete a user
+
 
 module.exports = router;
